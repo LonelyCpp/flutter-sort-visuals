@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:flutter_sort_visuals/sort/sort_data.dart';
 
-abstract class SortStream {
+class SortStream {
   final randomizer = Random();
   static const MAX_VAL = 20;
   static const MIN_VAL = 10;
@@ -31,6 +31,4 @@ abstract class SortStream {
   close() {
     controller.close();
   }
-
-  sort();
 }

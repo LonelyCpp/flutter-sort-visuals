@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sort_visuals/sort/algorithms/bubble_sort.dart';
-import 'package:flutter_sort_visuals/sort/algorithms/quick_sort.dart';
+import 'package:flutter_sort_visuals/sort/algorithms/base_sort.dart';
 import 'package:flutter_sort_visuals/sort/sort_data.dart';
 import 'package:flutter_sort_visuals/sort/sort_factory.dart';
 import 'package:flutter_sort_visuals/sort/sort_stream.dart';
@@ -16,11 +15,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  SortStream sortStream = SortFactory.get(SortAlgorithms.quicksort);
+  SortStream sortStream = SortStream();
+
+  BaseSort sorter;
+
+  @override
+  void initState() {
+    super.initState();
+    sorter = SortFactory.get(SortAlgorithms.quicksort, sortStream);
+  }
 
   setSortAlgo(SortAlgorithms algo) {
     setState(() {
-      sortStream = SortFactory.get(algo);
+      sorter = SortFactory.get(algo, sortStream);
     });
   }
 
@@ -59,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: FloatingActionButton(
-              onPressed: sortStream.sort,
+              onPressed: sorter.sort,
               child: Icon(Icons.sort),
             ),
           ),

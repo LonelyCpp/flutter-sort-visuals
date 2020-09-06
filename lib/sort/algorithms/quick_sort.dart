@@ -1,9 +1,15 @@
+import 'package:flutter_sort_visuals/sort/algorithms/base_sort.dart';
 import 'package:flutter_sort_visuals/sort/sort_data.dart';
 import 'package:flutter_sort_visuals/sort/sort_stream.dart';
 
-class QuickSort extends SortStream {
+class QuickSort extends BaseSort {
+  QuickSort(SortStream stream) : super(stream);
+
   @override
   sort() async {
+    var array = stream.array;
+    var controller = stream.controller;
+
     await quickSort(0, array.length - 1);
     controller.sink.add(SortData(array, Set()));
   }
@@ -17,6 +23,9 @@ class QuickSort extends SortStream {
   }
 
   _partition(startIndex, endIndex) async {
+    var array = stream.array;
+    var controller = stream.controller;
+
     final pivot = array[endIndex];
     int i = startIndex;
     int j = endIndex;
