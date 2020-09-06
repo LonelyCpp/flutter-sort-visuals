@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sort_visuals/sort/algorithms/bubble_sort.dart';
 import 'package:flutter_sort_visuals/sort/algorithms/quick_sort.dart';
 import 'package:flutter_sort_visuals/sort/sort_data.dart';
+import 'package:flutter_sort_visuals/sort/sort_factory.dart';
 import 'package:flutter_sort_visuals/sort/sort_stream.dart';
 import 'package:flutter_sort_visuals/widgets/settings_sheet.dart';
 import 'package:flutter_sort_visuals/widgets/value_box.dart';
@@ -15,7 +16,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  SortStream sortStream = QuickSort();
+  SortStream sortStream = SortFactory.get(SortAlgorithms.quicksort);
+
+  setSortAlgo(SortAlgorithms algo) {
+    setState(() {
+      sortStream = SortFactory.get(algo);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.settings),
-              onPressed: () => showSettings(this.context)),
+              onPressed: () => showSettings(this.context, setSortAlgo)),
         ],
       ),
       body: StreamBuilder<SortData>(
